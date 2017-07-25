@@ -5,7 +5,7 @@ Parameters:
   ChefServerSetupScript:
     Description: The URL to a script which will be downloaded and execute to configure the Chef Server frontends
     Type: String
-    Default: 'https://raw.githubusercontent.com/chef-customers/aws_native_chef_server/script_refactor/main.sh'
+    Default: 'https://raw.githubusercontent.com/chef-customers/aws_native_chef_server/master/main.sh'
   ChefServerPackage:
     Description: The URL to the chef server EL7 (chef-server-core) package which will be downloaded
     Type: String
