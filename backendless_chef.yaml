@@ -431,11 +431,11 @@ Resources:
                 dark_launch['actions'] = false
             /var/opt/opscode/nginx-esproxy/etc/esproxy_upstream.conf:
               content: !Sub |
-                upstream elasticsearch \{
+                upstream elasticsearch {
                   server ${ElasticsearchDomain.DomainEndpoint}:443;
-                \}
+                }
             /var/opt/opscode/nginx-esproxy/etc/esproxy.conf:
-              source: https://raw.githubusercontent.com/nsdavidson/aws_native_chef_server/nd/es-proxy/files/nginx-esproxy.conf
+              source: https://raw.githubusercontent.com/nsdavidson/aws_native_chef_server/nd/es-proxy/files/nginx-esproxy.conf 
             /var/opt/opscode/nginx-esproxy/etc/scripts/aws_creds.lua:
               source: https://raw.githubusercontent.com/nsdavidson/aws_native_chef_server/nd/es-proxy/files/aws_creds.lua
             /var/opt/opscode/nginx-esproxy/etc/es_auth.lua:
@@ -550,11 +550,9 @@ Resources:
         Version: "2012-10-17"
         Statement:
           - Effect: "Allow"
-            Principal: "*"
+            Principal:
+              AWS: !GetAtt ChefRole.Arn
             Action: "es:*"
-            Condition:
-              IpAddress:
-                "aws:sourceIp": !Ref NatGatewayIPs
       AdvancedOptions:
         rest.action.multi.allow_explicit_index: "true"
       Tags:
