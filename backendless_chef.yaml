@@ -202,8 +202,8 @@ Resources:
     DeletionPolicy: Retain
     Properties:
       AccessControl: Private
-    VersioningConfiguration:
-      Status: Enabled
+    # VersioningConfiguration:
+    #   Status: Enabled
 
   ChefInstanceProfile:
     Type: AWS::IAM::InstanceProfile
@@ -390,6 +390,7 @@ Resources:
               perl-Digest-SHA: []
               zip: []
               unzip: []
+              nginx: []
           files:
             /etc/chef-manage/manage.rb:
               content: !Sub |
@@ -428,6 +429,13 @@ Resources:
                 rabbitmq['queue_length_monitor_enabled'] = false
                 opscode_expander['enable'] = false
                 dark_launch['actions'] = false
+            /var/opt/opscode/nginx-esproxy/etc/esproxy_upstream.conf:
+              content: !Sub |
+                upstream elasticsearch \{
+                  server ${ElasticsearchDomain.DomainEndpoint}:443;
+                \}
+            /var/opt/opscode/nginx-esproxy/etc/esproxy.conf:
+              
           commands:
             01_configure_chef_server:
               command: !Sub
