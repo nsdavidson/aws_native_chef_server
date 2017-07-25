@@ -447,7 +447,9 @@ Resources:
             /var/opt/opscode/nginx-esproxy/etc/resty/hmac.lua:
               source: https://raw.githubusercontent.com/nsdavidson/aws_native_chef_server/nd/es-proxy/files/hmac.lua
           commands:
-            01_configure_chef_server:
+            01_start_es_proxy:
+              command: /opt/opscode/embedded/sbin/nginx -c /var/opt/opscode/nginx-esproxy/etc/esproxy.conf &
+            02_configure_chef_server:
               command: !Sub
               - |
                 export STACKNAME=${AWS::StackName}
@@ -457,7 +459,7 @@ Resources:
                 curl -s ${ChefServerSetupScript} | bash -x
               - { S3BUCKET: !If [CreateChefSecretsBucket, !Ref ChefBucket, !Ref ChefSecretsBucket] }
 
-            02_configure_cloudwatch_monitoring:
+            03_configure_cloudwatch_monitoring:
               command: !Sub |
                 mkdir /opt/cloudwatch_monitoring
                 cd /opt/cloudwatch_monitoring
