@@ -435,7 +435,17 @@ Resources:
                   server ${ElasticsearchDomain.DomainEndpoint}:443;
                 \}
             /var/opt/opscode/nginx-esproxy/etc/esproxy.conf:
-              
+              source: https://raw.githubusercontent.com/nsdavidson/aws_native_chef_server/nd/es-proxy/files/nginx-esproxy.conf
+            /var/opt/opscode/nginx-esproxy/etc/scripts/aws_creds.lua:
+              source: https://raw.githubusercontent.com/nsdavidson/aws_native_chef_server/nd/es-proxy/files/aws_creds.lua
+            /var/opt/opscode/nginx-esproxy/etc/es_auth.lua:
+              source: https://raw.githubusercontent.com/nsdavidson/aws_native_chef_server/nd/es-proxy/files/es_auth.lua
+              context:
+                region: AWS::Region
+            /var/opt/opscode/nginx-esproxy/etc/resty/aws_auth.lua:
+              source: https://raw.githubusercontent.com/nsdavidson/aws_native_chef_server/nd/es-proxy/files/aws_auth.lua
+            /var/opt/opscode/nginx-esproxy/etc/resty/hmac.lua:
+              source: https://raw.githubusercontent.com/nsdavidson/aws_native_chef_server/nd/es-proxy/files/hmac.lua
           commands:
             01_configure_chef_server:
               command: !Sub
